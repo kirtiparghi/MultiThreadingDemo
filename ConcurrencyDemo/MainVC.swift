@@ -8,7 +8,7 @@
 
 import UIKit
 
-let imageURLs = ["http://www.planetware.com/photos-large/F/france-paris-eiffel-tower.jpg", "http://adriatic-lines.com/wp-content/uploads/2015/04/canal-of-Venice.jpg", "http://image.pbs.org/video-assets/rc6moTn-asset-mezzanine-16x9-RVQaqL3.jpg", "http://bdo.se/wp-content/uploads/2014/01/Stockholm1.jpg"]
+let imageURLs = ["https://www.hd-wallpapersdownload.com/script/bulk-upload/high-resolution-nature-pics-dowload.jpg","http://www.planetware.com/photos-large/F/france-paris-eiffel-tower.jpg", "http://adriatic-lines.com/wp-content/uploads/2015/04/canal-of-Venice.jpg", "http://image.pbs.org/video-assets/rc6moTn-asset-mezzanine-16x9-RVQaqL3.jpg", "http://bdo.se/wp-content/uploads/2014/01/Stockholm1.jpg"]
 
 class Downloader {
     

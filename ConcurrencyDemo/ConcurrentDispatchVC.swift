@@ -10,6 +10,19 @@ import UIKit
 
 class ConcurrentDispatchVC: UIViewController {
     
+    @IBOutlet weak var lbl1: UILabel!
+    @IBOutlet weak var lbl2: UILabel!
+    @IBOutlet weak var lbl3: UILabel!
+    
+    var seconds1 = 1
+    var timer1 = Timer()
+    
+    var seconds2 = 1
+    var timer2 = Timer()
+    
+    var seconds3 = 1
+    var timer3 = Timer()
+    
     @IBOutlet weak var imageView1: UIImageView!
     
     @IBOutlet weak var imageView2: UIImageView!
@@ -20,6 +33,12 @@ class ConcurrentDispatchVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        lbl1.text = "1"
+        lbl2.text = "1"
+        lbl3.text = "1"
+        lbl1.isHidden = true
+        lbl2.isHidden = true
+        lbl3.isHidden = true
     }
     
     override func didReceiveMemoryWarning() {
@@ -32,7 +51,43 @@ class ConcurrentDispatchVC: UIViewController {
         self.present(controller, animated: true, completion: nil)
     }
     
+    func runTimer1() {
+        timer1 = Timer.scheduledTimer(timeInterval: 1, target: self, selector: (#selector(SerialDispatchVC.updateTimer1)), userInfo: nil, repeats: true)
+    }
+    
+    func runTimer2() {
+        timer2 = Timer.scheduledTimer(timeInterval: 1, target: self, selector: (#selector(SerialDispatchVC.updateTimer2)), userInfo: nil, repeats: true)
+    }
+    
+    func runTimer3() {
+        timer3 = Timer.scheduledTimer(timeInterval: 1, target: self, selector: (#selector(SerialDispatchVC.updateTimer3)), userInfo: nil, repeats: true)
+    }
+    
+    func updateTimer1() {
+        seconds1 += 1
+        lbl1.text = String(seconds1)
+    }
+    
+    func updateTimer2() {
+        seconds2 += 1
+        lbl2.text = String(seconds2)
+    }
+    
+    func updateTimer3() {
+        seconds3 += 1
+        lbl3.text = String(seconds3)
+    }
+
     @IBAction func didClickOnStart(sender: AnyObject) {
+        lbl1.isHidden = false
+        lbl2.isHidden = false
+        lbl3.isHidden = false
+        
+        //MAKE SERIAL QUEUE AND EXECUTE TASKS
+        self.runTimer1()
+        self.runTimer2()
+        self.runTimer3()
+
         //EXECUTE TASKS IN GLOBAL QUEUE (CONCURRENT EXECUTION)
         let queue = DispatchQueue(label: "queuename", attributes: .concurrent)
         queue.async {
@@ -40,6 +95,7 @@ class ConcurrentDispatchVC: UIViewController {
             
             DispatchQueue.main.async {
                 self.imageView1.image = img
+                self.timer1.invalidate()
             }
         }
         
@@ -48,6 +104,7 @@ class ConcurrentDispatchVC: UIViewController {
             
             DispatchQueue.main.async {
                 self.imageView2.image = img
+                self.timer2.invalidate()
             }
         }
         
@@ -56,6 +113,7 @@ class ConcurrentDispatchVC: UIViewController {
             
             DispatchQueue.main.async {
                 self.imageView3.image = img
+                self.timer3.invalidate()
             }
         }
     }
